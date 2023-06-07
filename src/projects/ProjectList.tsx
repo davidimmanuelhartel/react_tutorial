@@ -9,21 +9,24 @@ interface ProjectListProps {
 
 function ProjectList({ projects }: ProjectListProps) {
     const [projectBeingEdited, setProjectBeingEdited] = useState({});
-    
-    const handleEdit = (project: Project) => {
-        console.log(project);
-    };
 
-    const items = projects.map(project => (
-        <div key={project.id} className="col-sm">
-        <ProjectCard 
-        project={project}
-        onEdit={handleEdit}
-        ></ProjectCard>
-        <ProjectForm></ProjectForm>
+    const handleEdit = (project: Project) => {
+        setProjectBeingEdited(project);
+    };
+    return (
+        <div className="row">
+            {projects.map(project => (
+                <div key={project.id} className="col-sm">
+                {project === projectBeingEdited ? (
+                  <ProjectForm/>
+                ) : (
+                  <ProjectCard project={project} onEdit={handleEdit} />
+                )}
+               </div>
+            ))}
         </div>
-    ));
-    return <div className="row">{items}</div>;
+    );
 }
+
 
 export default ProjectList;
